@@ -3,6 +3,7 @@ package com.example.spca;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,10 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
         holder.textViewTitle.setText(stockItem.getTitle());
         holder.textViewManufacturer.setText(stockItem.getManufacturer());
         holder.textViewPrice.setText(String.valueOf(stockItem.getPrice()));
-        // Bind other data if needed
+        holder.textViewQuantity.setText(String.valueOf(stockItem.getQuantity()));
+        holder.textViewCategory.setText(stockItem.getCategory());
+        // Set image if available, you may need to load the image using Glide or another image loading library
+        // holder.imageViewProduct.setImageResource(stockItem.getImage()); // Example
     }
 
     @Override
@@ -38,14 +42,17 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
     }
 
     public class StockViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle, textViewManufacturer, textViewPrice;
+        TextView textViewTitle, textViewManufacturer, textViewPrice, textViewQuantity, textViewCategory;
+        ImageView imageViewProduct;
 
         public StockViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewManufacturer = itemView.findViewById(R.id.textViewManufacturer);
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
-            // Initialize other views if needed
+            textViewQuantity = itemView.findViewById(R.id.textViewQuantity);
+            textViewCategory = itemView.findViewById(R.id.textViewCategory);
+            imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
         }
     }
 }

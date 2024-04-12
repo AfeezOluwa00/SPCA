@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Title TextView -->
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
@@ -12,18 +13,37 @@
         android:textSize="18sp"
         android:textStyle="bold"/>
 
+    <!-- Manufacturer TextView -->
     <TextView
         android:id="@+id/textViewManufacturer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"/>
 
+    <!-- Price TextView -->
     <TextView
         android:id="@+id/textViewPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"/>
 
-    <!-- Add more TextViews for other details like category, image, etc. if needed -->
+    <!-- Quantity TextView -->
+    <TextView
+        android:id="@+id/textViewQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
+
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:id="@+id/imageViewProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/> -->
 
 </LinearLayout>

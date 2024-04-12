@@ -4,6 +4,7 @@ public class StockItem {
     private String title;
     private String manufacturer;
     private String price;
+    private String quantity; // Changed to int for quantity
     private String category;
     private String imageUrl;
 
@@ -12,10 +13,11 @@ public class StockItem {
         // Default constructor required for Firebase
     }
 
-    public StockItem(String title, String manufacturer, String price, String category, String imageUrl) {
+    public StockItem(String title, String manufacturer, String price, String quantity, String category, String imageUrl) {
         this.title = title;
         this.manufacturer = manufacturer;
         this.price = price;
+        this.quantity = quantity;
         this.category = category;
         this.imageUrl = imageUrl;
     }
@@ -45,6 +47,14 @@ public class StockItem {
         this.price = price;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -61,4 +71,3 @@ public class StockItem {
         this.imageUrl = imageUrl;
     }
 }
-

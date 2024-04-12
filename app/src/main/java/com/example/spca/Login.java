@@ -1,13 +1,10 @@
 package com.example.spca;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-
-
-import androidx.annotation.NonNull;
-
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -20,6 +17,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
@@ -71,16 +72,42 @@ public class Login extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
 
                         if (task.isSuccessful()) {
-                            Toast.makeText(Login.this, "User is logged in now", Toast.LENGTH_SHORT).show();
-
-                            // Move to the HomePage activity after successful login
-                            Intent intent = new Intent(Login.this, UserActivity.class);
-                            intent.putExtra("keyname", textEmail);
-                            startActivity(intent);
-
+                            // Check user role and redirect accordingly
+                            fetchUserRoleAndRedirect(textEmail);
                         } else {
                             Toast.makeText(Login.this, "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                });
+    }
+
+    private void fetchUserRoleAndRedirect(String email) {
+        FirebaseDatabase.getInstance().getReference("Registered Users")
+                .orderByChild("email")
+                .equalTo(email)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            ReadWriteUserDetails userDetails = snapshot.getValue(ReadWriteUserDetails.class);
+                            if (userDetails != null) {
+                                String role = userDetails.getRole();
+                                if (role.equals("Administrator")) {
+                                    startActivity(new Intent(Login.this, AdminActivity.class));
+                                } else {
+                                    startActivity(new Intent(Login.this, UserActivity.class));
+                                }
+                                finish(); // Finish the current activity
+                                return;
+                            }
+                        }
+                        // No user found with the given email
+                        Toast.makeText(Login.this, "User not found", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(Login.this, "Failed to fetch user data", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

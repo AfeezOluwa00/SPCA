@@ -1,20 +1,58 @@
 package com.example.spca;
 
-// ReadWriteUserDetails.java
 public class ReadWriteUserDetails {
-    public String email, password, mobile, name,role;  // User's default city
+    private String email, password, mobile, name, role;
 
     // Default constructor required for Firebase
     public ReadWriteUserDetails() {
     }
 
+    public ReadWriteUserDetails(String email, String password, String mobile, String name, String role) {
+        this.email = email;
+        this.password = password;
+        this.mobile = mobile;
+        this.name = name;
+        this.role = role;
+    }
 
+    // Getter and setter methods
+    public String getEmail() {
+        return email;
+    }
 
-    public ReadWriteUserDetails(String textEmail, String textPassword, String textMobile, String textName,String role) {
-        this.email = textEmail;
-        this.password = textPassword;
-        this.mobile = textMobile;
-        this.name = textName;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
         this.role = role;
     }
 }

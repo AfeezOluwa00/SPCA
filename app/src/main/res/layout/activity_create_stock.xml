@@ -44,6 +44,12 @@
                 android:layout_height="wrap_content"
                 android:hint="Category"
                 android:inputType="text" />
+            <EditText
+                android:id="@+id/quantityEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Quanitiy"
+                android:inputType="number" />
 
             <!-- Image ImageView -->
             <ImageView

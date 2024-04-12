@@ -28,7 +28,7 @@ import com.google.firebase.storage.UploadTask;
 // AdminActivity.java
 
 public class CreateStockActivity extends AppCompatActivity {
-    private EditText titleEditText, manufacturerEditText, priceEditText, categoryEditText;
+    private EditText titleEditText, manufacturerEditText, priceEditText, categoryEditText, quantityEditText;
     private Button addButton;
     private ImageView imageView;
     private Uri imageUri;
@@ -49,6 +49,8 @@ public class CreateStockActivity extends AppCompatActivity {
         manufacturerEditText = findViewById(R.id.manufacturerEditText);
         priceEditText = findViewById(R.id.priceEditText);
         categoryEditText = findViewById(R.id.categoryEditText);
+        quantityEditText = findViewById(R.id.quantityEditText);
+
 
         // Initialize ImageView for image selection
         imageView = findViewById(R.id.imageView);
@@ -88,6 +90,8 @@ public class CreateStockActivity extends AppCompatActivity {
         String manufacturer = manufacturerEditText.getText().toString().trim();
         String price = priceEditText.getText().toString().trim();
         String category = categoryEditText.getText().toString().trim();
+        String quantity = quantityEditText.getText().toString().trim();
+
 
         if (TextUtils.isEmpty(title) || TextUtils.isEmpty(manufacturer) || TextUtils.isEmpty(price) || TextUtils.isEmpty(category) || imageUri == null) {
             Toast.makeText(this, "Please fill in all fields and select an image", Toast.LENGTH_SHORT).show();
@@ -104,7 +108,7 @@ public class CreateStockActivity extends AppCompatActivity {
                     public void onSuccess(Uri uri) {
                         String imageUrl = uri.toString();
                         // Create stock item object
-                        StockItem stockItem = new StockItem(title, manufacturer, price, category, imageUrl);
+                        StockItem stockItem = new StockItem(title, manufacturer, price,quantity, category, imageUrl);
 
                         // Save stock item to Firebase Database
                         String itemId = stockReference.push().getKey();
