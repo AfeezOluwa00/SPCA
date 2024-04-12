@@ -1,87 +1,60 @@
 package com.example.spca;
 
+=import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-
-// AdminActivity.java
-
 public class AdminActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private StockAdapter stockAdapter;
-    private EditText searchEditText;
-    private DatabaseReference stockReference;
-    private DatabaseReference customerReference;
-    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        // Initialize Firebase components
-        auth = FirebaseAuth.getInstance();
-        stockReference = FirebaseDatabase.getInstance().getReference("Stock");
-        customerReference = FirebaseDatabase.getInstance().getReference("Customers");
+        // Button for creating stock
+        Button createStockButton = findViewById(R.id.createStockButton);
+        createStockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open CreateStockActivity
+                Intent intent = new Intent(AdminActivity.this, CreateStockActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        // Initialize RecyclerView
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Button for viewing stock
+        Button viewStockButton = findViewById(R.id.viewStockButton);
+        viewStockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open ViewStockActivity
+                Intent intent = new Intent(AdminActivity.this, ViewStockActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        // Initialize Search EditText
-        searchEditText = findViewById(R.id.searchEditText);
-
-        // Load stock items
-        loadStockItems();
-
-        // Search button click listener
+        // Button for searching
         Button searchButton = findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchText = searchEditText.getText().toString().trim();
-                searchStockItems(searchText);
+                // Open SearchActivity
+                Intent intent = new Intent(AdminActivity.this, SearchActivity.class);
+                startActivity(intent);
             }
         });
 
-        // Add, edit, delete buttons click listeners
-        Button addButton = findViewById(R.id.addButton);
-        Button editButton = findViewById(R.id.editButton);
-        Button deleteButton = findViewById(R.id.deleteButton);
-
-        addButton.setOnClickListener(new View.OnClickListener() {
+        // Button for updating stock
+        Button updateStockButton = findViewById(R.id.updateStockButton);
+        updateStockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle adding a new stock item
-            }
-        });
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle editing an existing stock item
-            }
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle deleting a stock item
+                // Open UpdateStockActivity
+                Intent intent = new Intent(AdminActivity.this, UpdateStockActivity.class);
+                startActivity(intent);
             }
         });
     }
-
-    private void loadStockItems() {
-        // Query Firebase database for stock items
-        // Populate RecyclerView with stock items using a custom adapter
-        stockAdapter = new StockAdapter(stockItemList);
-        recyclerView.setAdapter(stockAdapter);
-    }
-
-    private void searchStockItems(String searchText) {
-        // Query Firebase database to search for stock items matching the search criteria
-        // Update RecyclerView with filtered list of stock items
-    }
-
-    // Other methods for handling customer details, purchase histories, and simulating purchases
 }

@@ -13,6 +13,18 @@
         android:theme="@style/Theme.SPCA"
         tools:targetApi="31">
         <activity
+            android:name=".UpdateStockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewStockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateStockActivity"
+            android:exported="false" />
+        <activity
             android:name=".Login"
             android:exported="false" />
         <activity
@@ -22,8 +34,8 @@
             android:name=".UserActivity"
             android:exported="false" />
         <activity
-        android:name=".AdminActivity"
-        android:exported="false" />
+            android:name=".AdminActivity"
+            android:exported="false" />
         <activity
             android:name=".IndexPage"
             android:exported="true">
