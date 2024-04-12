@@ -139,4 +139,9 @@ public class CreateStockActivity extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+    public void viewStock(View view) {
+        Intent intent = new Intent(this, StockListActivity.class);
+        startActivity(intent);
+    }
+
 }

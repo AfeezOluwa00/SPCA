@@ -41,6 +41,13 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
         return stockList.size();
     }
 
+    public void setOnItemClickListener(StockAdapter.OnItemClickListener stockItem) {
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     public class StockViewHolder extends RecyclerView.ViewHolder {
         TextView textViewTitle, textViewManufacturer, textViewPrice, textViewQuantity, textViewCategory;
         ImageView imageViewProduct;
