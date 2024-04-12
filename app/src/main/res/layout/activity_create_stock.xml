@@ -1,9 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- activity_admin.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateStockActivity">
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Title EditText -->
+            <EditText
+                android:id="@+id/titleEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Title"
+                android:inputType="text" />
+
+            <!-- Manufacturer EditText -->
+            <EditText
+                android:id="@+id/manufacturerEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Manufacturer"
+                android:inputType="text" />
+
+            <!-- Price EditText -->
+            <EditText
+                android:id="@+id/priceEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price"
+                android:inputType="numberDecimal" />
+
+            <!-- Category EditText -->
+            <EditText
+                android:id="@+id/categoryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Category"
+                android:inputType="text" />
+
+            <!-- Image ImageView -->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_launcher_background"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:contentDescription="Select Image" />
+
+            <!-- Add Button -->
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Stock Item"
+                android:layout_marginTop="16dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
