@@ -25,7 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-// AdminActivity.java
+import java.util.Random;
 
 public class CreateStockActivity extends AppCompatActivity {
     private EditText titleEditText, manufacturerEditText, priceEditText, categoryEditText, quantityEditText;
@@ -50,7 +50,6 @@ public class CreateStockActivity extends AppCompatActivity {
         priceEditText = findViewById(R.id.priceEditText);
         categoryEditText = findViewById(R.id.categoryEditText);
         quantityEditText = findViewById(R.id.quantityEditText);
-
 
         // Initialize ImageView for image selection
         imageView = findViewById(R.id.imageView);
@@ -86,20 +85,23 @@ public class CreateStockActivity extends AppCompatActivity {
     }
 
     private void addStockItem() {
-        String title = titleEditText.getText().toString().trim();
-        String manufacturer = manufacturerEditText.getText().toString().trim();
-        String price = priceEditText.getText().toString().trim();
-        String category = categoryEditText.getText().toString().trim();
-        String quantity = quantityEditText.getText().toString().trim();
-
+        final String title = titleEditText.getText().toString().trim();
+        final String manufacturer = manufacturerEditText.getText().toString().trim();
+        final String price = priceEditText.getText().toString().trim();
+        final String category = categoryEditText.getText().toString().trim();
+        final String quantity = quantityEditText.getText().toString().trim();
 
         if (TextUtils.isEmpty(title) || TextUtils.isEmpty(manufacturer) || TextUtils.isEmpty(price) || TextUtils.isEmpty(category) || imageUri == null) {
             Toast.makeText(this, "Please fill in all fields and select an image", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Generate a random 3-digit item ID
+        Random random = new Random();
+        final int itemId = random.nextInt(900) + 100; // Generates a random number between 100 and 999
+
         // Upload image to Firebase Storage
-        final StorageReference imageReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+        final StorageReference imageReference = storageReference.child(itemId + "." + getFileExtension(imageUri));
         imageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -108,11 +110,10 @@ public class CreateStockActivity extends AppCompatActivity {
                     public void onSuccess(Uri uri) {
                         String imageUrl = uri.toString();
                         // Create stock item object
-                        StockItem stockItem = new StockItem(title, manufacturer, price,quantity, category, imageUrl);
+                        StockItem stockItem = new StockItem(String.valueOf(itemId), title, manufacturer, price,quantity, category, imageUrl);
 
                         // Save stock item to Firebase Database
-                        String itemId = stockReference.push().getKey();
-                        stockReference.child(itemId).setValue(stockItem);
+                        stockReference.child(String.valueOf(itemId)).setValue(stockItem);
 
                         Toast.makeText(CreateStockActivity.this, "Stock item added successfully", Toast.LENGTH_SHORT).show();
 
@@ -121,6 +122,7 @@ public class CreateStockActivity extends AppCompatActivity {
                         manufacturerEditText.setText("");
                         priceEditText.setText("");
                         categoryEditText.setText("");
+                        quantityEditText.setText("");
                         imageView.setImageResource(R.drawable.ic_launcher_background);
                         imageUri = null;
                     }
@@ -139,9 +141,9 @@ public class CreateStockActivity extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+
     public void viewStock(View view) {
         Intent intent = new Intent(this, StockListActivity.class);
         startActivity(intent);
     }
-
 }

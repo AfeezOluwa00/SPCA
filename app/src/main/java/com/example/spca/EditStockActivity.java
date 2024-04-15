@@ -68,7 +68,7 @@ public class EditStockActivity extends AppCompatActivity {
         String itemId = getIntent().getStringExtra("itemId");
 
         // Update the stock item details in Firebase Database
-        StockItem updatedStockItem = new StockItem(title, manufacturer,price,quantity, category, "");
+        StockItem updatedStockItem = new StockItem(itemId,title, manufacturer,price,quantity, category, "");
         stockReference.child(itemId).setValue(updatedStockItem);
 
         Toast.makeText(this, "Stock item updated successfully", Toast.LENGTH_SHORT).show();

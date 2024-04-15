@@ -1,10 +1,11 @@
 package com.example.spca;
 
 public class StockItem {
+    private String itemId;
     private String title;
     private String manufacturer;
     private String price;
-    private String quantity; // Changed to int for quantity
+    private String quantity;
     private String category;
     private String imageUrl;
 
@@ -13,7 +14,8 @@ public class StockItem {
         // Default constructor required for Firebase
     }
 
-    public StockItem(String title, String manufacturer, String price, String quantity, String category, String imageUrl) {
+    public StockItem(String itemId, String title, String manufacturer, String price, String quantity, String category, String imageUrl) {
+        this.itemId = itemId;
         this.title = title;
         this.manufacturer = manufacturer;
         this.price = price;
@@ -22,7 +24,14 @@ public class StockItem {
         this.imageUrl = imageUrl;
     }
 
-    // Getters and setters
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
     public String getTitle() {
         return title;
     }

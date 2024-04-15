@@ -56,5 +56,38 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button purchaseHistory = findViewById(R.id.purchaseHistory);
+        purchaseHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open UpdateStockActivity
+                Intent intent = new Intent(AdminActivity.this, PurchaseActivity.class);
+                startActivity(intent);
+            }
+        });
+        Button customerDetails = findViewById(R.id.customerDetails);
+
+        customerDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open UpdateStockActivity
+                Intent intent = new Intent(AdminActivity.this, CustomerDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+        Button logOut = findViewById(R.id.logOut);
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open UpdateStockActivity
+                Intent intent = new Intent(AdminActivity.this, Login.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
+
+
 }

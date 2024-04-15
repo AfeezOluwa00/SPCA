@@ -40,6 +40,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Update Stock" />
+            <Button
+                android:id="@+id/purchaseHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Purchase History" />
+            <Button
+                android:id="@+id/customerDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" Customer Details" />
+            <Button
+                android:id="@+id/logOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log out" />
 
         </LinearLayout>
     </ScrollView>
