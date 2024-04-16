@@ -7,13 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import java.util.List;
 
-public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
-
+public class StockAdapterCustomer extends RecyclerView.Adapter<StockAdapterCustomer.StockViewHolder> {
     private List<StockItem> stockList;
 
-    public StockAdapter(List<StockItem> stockList) {
+    public StockAdapterCustomer(List<StockItem> stockList) {
         this.stockList = stockList;
     }
 
@@ -32,20 +32,22 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
         holder.textViewPrice.setText(String.valueOf(stockItem.getPrice()));
         holder.textViewQuantity.setText(String.valueOf(stockItem.getQuantity()));
         holder.textViewCategory.setText(stockItem.getCategory());
-        // Set image if available, you may need to load the image using Glide or another image loading library
-        // holder.imageViewProduct.setImageResource(stockItem.getImage()); // Example
+
+        // Check if imageUrl is not null before loading with Glide
+        if (stockItem.getImageUrl() != null) {
+            Glide.with(holder.itemView.getContext())
+                    .load(stockItem.getImageUrl())
+                    .into(holder.imageViewProduct);
+        } else {
+            // Handle the case where imageUrl is null, for example, set a placeholder image
+            holder.imageViewProduct.setImageResource(R.drawable.ic_launcher_background);
+        }
     }
+
 
     @Override
     public int getItemCount() {
         return stockList.size();
-    }
-
-    public void setOnItemClickListener(StockAdapter.OnItemClickListener stockItem) {
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
     }
 
     public class StockViewHolder extends RecyclerView.ViewHolder {
@@ -59,7 +61,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
             textViewQuantity = itemView.findViewById(R.id.textViewQuantity);
             textViewCategory = itemView.findViewById(R.id.textViewCategory);
-          //  imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
+        //    imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
         }
     }
 }
