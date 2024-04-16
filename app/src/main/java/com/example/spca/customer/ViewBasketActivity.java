@@ -34,7 +34,7 @@ public class ViewBasketActivity extends AppCompatActivity {
         clearBasketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clearBasket(v);
+                clearBasket();
             }
         });
 
@@ -42,22 +42,9 @@ public class ViewBasketActivity extends AppCompatActivity {
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                proceedToCheckout(v);
+                proceedToCheckout();
             }
         });
-    }
-
-    public void clearBasket(View view) {
-        basketReference.removeValue(); // Remove all items from Firebase
-        Toast.makeText(this, "Basket cleared", Toast.LENGTH_SHORT).show();
-    }
-
-    public void proceedToCheckout(View view) {
-        // Start a new activity for checkout
-        Intent intent = new Intent(this, CheckOutActivity.class);
-        startActivity(intent);
-
-
 
         // Initialize Firebase Database
         String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -77,6 +64,17 @@ public class ViewBasketActivity extends AppCompatActivity {
 
         // Retrieve basket items from Firebase
         retrieveBasket();
+    }
+
+    private void clearBasket() {
+        basketReference.removeValue(); // Remove all items from Firebase
+        Toast.makeText(this, "Basket cleared", Toast.LENGTH_SHORT).show();
+    }
+
+    private void proceedToCheckout() {
+        // Start a new activity for checkout
+        Intent intent = new Intent(this, CheckOutActivity.class);
+        startActivity(intent);
     }
 
     private void retrieveBasket() {

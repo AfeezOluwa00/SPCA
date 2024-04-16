@@ -1,12 +1,15 @@
 package com.example.spca.model;
 
-public class BasketItem {
+import java.io.Serializable;
+
+public class BasketItem implements Serializable {
     private String stockItemId;
     private String title;
     private String manufacturer;
     private String price;
-    private String quantity;
+    private String quantity,  comments;
 
+    private float ratings;
     public BasketItem() {
         // Default constructor required for Firebase
     }
@@ -58,5 +61,25 @@ public class BasketItem {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+    public void setTimestamp(long timestamp) {
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments){
+}
+
+    public float getRatings() {
+        return ratings;
+    }
+
+
+
+
+    public void setRating(float rating) {
     }
 }
