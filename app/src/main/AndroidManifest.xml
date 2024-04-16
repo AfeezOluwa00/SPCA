@@ -13,34 +13,46 @@
         android:theme="@style/Theme.SPCA"
         tools:targetApi="31">
         <activity
+            android:name=".customer.CheckOutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.AddToBasketActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminBasket"
+            android:exported="false" />
+        <activity
             android:name=".SearchActivityCustomer"
             android:exported="false" />
         <activity
-            android:name=".AdditionalDetailsActivity"
+            android:name=".customer.AdditionalDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".CustomerDetailsActivity"
+            android:name=".admin.CustomerDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".PurchaseActivity"
+            android:name=".admin.PurchaseActivity"
             android:exported="false" />
         <activity
-            android:name=".EditStockActivity"
+            android:name=".admin.EditStockActivity"
             android:exported="false" />
         <activity
             android:name=".StockListActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateStockActivity"
+            android:name=".admin.UpdateStockActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".admin.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewStockActivity"
+            android:name=".admin.ViewStockActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateStockActivity"
+            android:name=".admin.CreateStockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.ViewBasketActivity"
             android:exported="false" />
         <activity
             android:name=".Login"
@@ -49,10 +61,13 @@
             android:name=".Register"
             android:exported="false" />
         <activity
-            android:name=".UserActivity"
+            android:name=".customer.UserActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminActivity"
+            android:name=".customer.CustomerViewStockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminActivity"
             android:exported="false" />
         <activity
             android:name=".IndexPage"

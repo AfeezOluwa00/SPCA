@@ -26,6 +26,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Search Items" />
+            <Button
+                android:id="@+id/viewItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Basket" />
+
+            <!-- Update Stock Button -->
+            <Button
+                android:id="@+id/updateStockButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Stock" />
+            <Button
+                android:id="@+id/logOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout" />
 
 
         </LinearLayout>

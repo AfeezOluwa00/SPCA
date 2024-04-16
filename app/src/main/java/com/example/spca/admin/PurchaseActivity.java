@@ -1,8 +1,10 @@
-package com.example.spca;
+package com.example.spca.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.spca.R;
 
 public class PurchaseActivity extends AppCompatActivity {
 

@@ -1,16 +1,23 @@
-package com.example.spca;
+package com.example.spca.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.spca.R;
+import com.example.spca.customer.AddToBasketActivity;
+import com.example.spca.model.StockItem;
+
 import java.util.List;
 
 public class StockAdapterCustomer extends RecyclerView.Adapter<StockAdapterCustomer.StockViewHolder> {
+
     private List<StockItem> stockList;
 
     public StockAdapterCustomer(List<StockItem> stockList) {
@@ -33,16 +40,20 @@ public class StockAdapterCustomer extends RecyclerView.Adapter<StockAdapterCusto
         holder.textViewQuantity.setText(String.valueOf(stockItem.getQuantity()));
         holder.textViewCategory.setText(stockItem.getCategory());
 
-        // Check if imageUrl is not null before loading with Glide
-        if (stockItem.getImageUrl() != null) {
-            Glide.with(holder.itemView.getContext())
-                    .load(stockItem.getImageUrl())
-                    .into(holder.imageViewProduct);
-        } else {
-            // Handle the case where imageUrl is null, for example, set a placeholder image
-            holder.imageViewProduct.setImageResource(R.drawable.ic_launcher_background);
-        }
+        // Load image using Glide
+        Glide.with(holder.itemView.getContext()).load(stockItem.getImageUrl()).into(holder.imageViewProduct);
+
+        holder.addToBasket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start AddToBasketActivity and pass the selected StockItem
+                Intent intent = new Intent(v.getContext(), AddToBasketActivity.class);
+                intent.putExtra("selectedStockItem", stockItem);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
+
 
 
     @Override
@@ -50,9 +61,16 @@ public class StockAdapterCustomer extends RecyclerView.Adapter<StockAdapterCusto
         return stockList.size();
     }
 
+    public void setStockList(List<StockItem> stockList) {
+        this.stockList = stockList;
+        notifyDataSetChanged();
+    }
+
     public class StockViewHolder extends RecyclerView.ViewHolder {
         TextView textViewTitle, textViewManufacturer, textViewPrice, textViewQuantity, textViewCategory;
         ImageView imageViewProduct;
+
+        Button addToBasket;
 
         public StockViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,7 +79,8 @@ public class StockAdapterCustomer extends RecyclerView.Adapter<StockAdapterCusto
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
             textViewQuantity = itemView.findViewById(R.id.textViewQuantity);
             textViewCategory = itemView.findViewById(R.id.textViewCategory);
-        //    imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
+            imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
+            addToBasket  = itemView.findViewById(R.id.buttonAddToBasket);
         }
     }
 }

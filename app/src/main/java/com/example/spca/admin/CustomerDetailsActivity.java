@@ -1,4 +1,4 @@
-package com.example.spca;
+package com.example.spca.admin;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.spca.adapter.CustomerAdapter;
+import com.example.spca.R;
+import com.example.spca.model.ReadWriteUserDetails;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

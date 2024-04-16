@@ -1,4 +1,4 @@
-package com.example.spca;
+package com.example.spca.admin;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,6 +7,10 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.spca.R;
+import com.example.spca.adapter.StockAdapter;
+import com.example.spca.model.StockItem;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;
@@ -23,13 +27,13 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_list);
+        setContentView(com.example.spca.R.layout.activity_stock_list);
 
         // Initialize Firebase Database
         stockReference = FirebaseDatabase.getInstance().getReference("Stock");
 
         // Initialize RecyclerView
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(com.example.spca.R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

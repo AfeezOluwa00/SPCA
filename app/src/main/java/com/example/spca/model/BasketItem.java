@@ -1,35 +1,31 @@
-package com.example.spca;
+package com.example.spca.model;
 
-public class StockItem {
-    private String itemId;
+public class BasketItem {
+    private String stockItemId;
     private String title;
     private String manufacturer;
     private String price;
     private String quantity;
-    private String category;
-    private String imageUrl;
 
-    // Constructors, getters, and setters
-    public StockItem() {
+    public BasketItem() {
         // Default constructor required for Firebase
     }
 
-    public StockItem(String itemId, String title, String manufacturer, String price, String quantity, String category, String imageUrl) {
-        this.itemId = itemId;
+    public BasketItem(String stockItemId, String title, String manufacturer, String price, String quantity) {
+        this.stockItemId = stockItemId;
         this.title = title;
         this.manufacturer = manufacturer;
         this.price = price;
         this.quantity = quantity;
-        this.category = category;
-        this.imageUrl = imageUrl;
     }
 
-    public String getItemId() {
-        return itemId;
+    // Getters and setters
+    public String getStockItemId() {
+        return stockItemId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setStockItemId(String stockItemId) {
+        this.stockItemId = stockItemId;
     }
 
     public String getTitle() {
@@ -62,21 +58,5 @@ public class StockItem {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 }

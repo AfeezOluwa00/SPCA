@@ -1,22 +1,28 @@
-package com.example.spca;
+package com.example.spca.customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.spca.Login;
+import com.example.spca.R;
 import com.example.spca.adapter.StockAdapterCustomer;
 import com.example.spca.model.StockItem;
 import com.google.firebase.database.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class SearchActivityCustomer extends AppCompatActivity {
+public class CustomerViewStockActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private StockAdapterCustomer adapter;
@@ -27,7 +33,9 @@ public class SearchActivityCustomer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_list);
+        setContentView(R.layout.activity_customer_view_stock);
+
+
 
         // Initialize Firebase Database
         stockReference = FirebaseDatabase.getInstance().getReference("Stock");
@@ -91,30 +99,66 @@ public class SearchActivityCustomer extends AppCompatActivity {
                 searchResults.add(item);
             }
         }
-        adapter = new StockAdapterCustomer(searchResults);
-        recyclerView.setAdapter(adapter);
+        adapter.setStockList(searchResults);
     }
 
-    // Method to sort the stock items based on a selected attribute
-    private void sortStock(String attribute, boolean ascending) {
-        // Sort the stockList based on the selected attribute
+    private void sortStockByTitle(boolean ascending) {
         Collections.sort(stockList, new Comparator<StockItem>() {
             @Override
             public int compare(StockItem item1, StockItem item2) {
-                switch (attribute) {
-                    case "title":
-                        return ascending ? item1.getTitle().compareTo(item2.getTitle()) :
-                                item2.getTitle().compareTo(item1.getTitle());
-                    case "manufacturer":
-                        return ascending ? item1.getManufacturer().compareTo(item2.getManufacturer()) :
-                                item2.getManufacturer().compareTo(item1.getManufacturer());
-
-                    // Add more cases for other attributes as needed
-                    default:
-                        return 0;
+                if (ascending) {
+                    return item1.getTitle().compareToIgnoreCase(item2.getTitle());
+                } else {
+                    return item2.getTitle().compareToIgnoreCase(item1.getTitle());
                 }
             }
         });
         adapter.notifyDataSetChanged();
     }
+
+    private void sortStockByManufacturer(boolean ascending) {
+        Collections.sort(stockList, new Comparator<StockItem>() {
+            @Override
+            public int compare(StockItem item1, StockItem item2) {
+                if (ascending) {
+                    return item1.getManufacturer().compareToIgnoreCase(item2.getManufacturer());
+                } else {
+                    return item2.getManufacturer().compareToIgnoreCase(item1.getManufacturer());
+                }
+            }
+        });
+        adapter.notifyDataSetChanged();
+    }
+
+    private void sortStockByPrice(boolean ascending) {
+        Collections.sort(stockList, new Comparator<StockItem>() {
+            @Override
+            public int compare(StockItem item1, StockItem item2) {
+                if (ascending) {
+                    return item1.getPrice().compareToIgnoreCase(item2.getManufacturer());
+                } else {
+                    return item2.getPrice().compareToIgnoreCase(item1.getManufacturer());
+                }
+            }
+        });
+        adapter.notifyDataSetChanged();
+    }
+
+
+     private void sortStockByCategory(boolean ascending) {
+         Collections.sort(stockList, new Comparator<StockItem>() {
+             @Override
+             public int compare(StockItem item1, StockItem item2) {
+                 if (ascending) {
+                     return item1.getCategory().compareToIgnoreCase(item2.getCategory());
+                 } else {
+                     return item2.getCategory().compareToIgnoreCase(item1.getCategory());
+                 }
+             }
+         });
+         adapter.notifyDataSetChanged();
+     }
+
+
+
 }

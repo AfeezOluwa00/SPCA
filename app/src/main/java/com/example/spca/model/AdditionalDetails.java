@@ -1,4 +1,4 @@
-package com.example.spca;
+package com.example.spca.model;
 
 public class AdditionalDetails {
     private String userId;

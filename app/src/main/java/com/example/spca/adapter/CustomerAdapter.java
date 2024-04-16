@@ -1,4 +1,4 @@
-package com.example.spca;
+package com.example.spca.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.spca.R;
+import com.example.spca.model.ReadWriteUserDetails;
 
 import java.util.List;
 

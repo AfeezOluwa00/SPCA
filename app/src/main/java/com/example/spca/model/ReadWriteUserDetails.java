@@ -1,4 +1,4 @@
-package com.example.spca;
+package com.example.spca.model;
 
 public class ReadWriteUserDetails {
     private String email, password, mobile, name, role;

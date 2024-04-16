@@ -1,4 +1,4 @@
-package com.example.spca;
+package com.example.spca.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.spca.R;
+import com.example.spca.model.StockItem;
+
 import java.util.List;
+import java.util.Set;
 
 public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
@@ -32,8 +37,8 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
         holder.textViewPrice.setText(String.valueOf(stockItem.getPrice()));
         holder.textViewQuantity.setText(String.valueOf(stockItem.getQuantity()));
         holder.textViewCategory.setText(stockItem.getCategory());
-        // Set image if available, you may need to load the image using Glide or another image loading library
-        // holder.imageViewProduct.setImageResource(stockItem.getImage()); // Example
+       //  Set image if available, you may need to load the image using Glide or another image loading library
+         holder.imageViewProduct.setImageResource(Integer.parseInt(stockItem.getImageUrl())); // Example
     }
 
     @Override
@@ -59,7 +64,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
             textViewQuantity = itemView.findViewById(R.id.textViewQuantity);
             textViewCategory = itemView.findViewById(R.id.textViewCategory);
-          //  imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
+            imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
         }
     }
 }
