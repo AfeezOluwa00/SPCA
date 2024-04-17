@@ -5,6 +5,10 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.example.spca.admin.StockItemObserver;
+
+import java.util.List;
+
 
 public class StockItem implements Parcelable {
     private String itemId;
@@ -14,6 +18,9 @@ public class StockItem implements Parcelable {
     private String quantity;
     private String category;
     private String imageUrl;
+
+    private List<StockItemObserver> observers;
+
 
     // Constructors, getters, and setters
     public StockItem() {
@@ -122,5 +129,19 @@ public class StockItem implements Parcelable {
         dest.writeString(quantity);
         dest.writeString(category);
         dest.writeString(imageUrl);
+    }
+
+    public void addObserver(StockItemObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(StockItemObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (StockItemObserver observer : observers) {
+            observer.onStockItemUpdated(this);
+        }
     }
 }

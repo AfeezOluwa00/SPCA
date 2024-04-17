@@ -5,14 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.spca.R;
 import com.example.spca.model.StockItem;
 
 import java.util.List;
-import java.util.Set;
 
 public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
@@ -37,8 +38,13 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
         holder.textViewPrice.setText(String.valueOf(stockItem.getPrice()));
         holder.textViewQuantity.setText(String.valueOf(stockItem.getQuantity()));
         holder.textViewCategory.setText(stockItem.getCategory());
-       //  Set image if available, you may need to load the image using Glide or another image loading library
-         holder.imageViewProduct.setImageResource(Integer.parseInt(stockItem.getImageUrl())); // Example
+
+        // Load image using Glide
+        Glide.with(holder.itemView)
+                .load(stockItem.getImageUrl())
+                .placeholder(R.drawable.ic_launcher_background) // Placeholder image while loading
+                .error(R.drawable.ic_launcher_foreground) // Image to show if loading fails
+                .into(holder.imageViewProduct);
     }
 
     @Override

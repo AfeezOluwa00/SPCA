@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewBasketItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Basket Item:"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textViewBasketItemDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewBasketItem"
+        android:layout_marginStart="20dp"
+        android:text="No item added to the basket yet."
+        android:textSize="16sp"/>
+
+</RelativeLayout>

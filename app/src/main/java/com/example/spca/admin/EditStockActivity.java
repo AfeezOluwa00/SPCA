@@ -1,7 +1,5 @@
 package com.example.spca.admin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,23 +7,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.spca.R;
 import com.example.spca.model.StockItem;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.spca.admin.StockItemObserver;
+public class EditStockActivity extends AppCompatActivity implements StockItemObserver {
 
-public class EditStockActivity extends AppCompatActivity {
     private EditText titleEditText, manufacturerEditText, priceEditText, categoryEditText, quantityEditText;
     private Button updateButton;
-    private DatabaseReference stockReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_stock);
-
-        // Initialize Firebase components
-        stockReference = FirebaseDatabase.getInstance().getReference("Stock");
 
         // Initialize EditText fields
         titleEditText = findViewById(R.id.titleEditText);
@@ -69,13 +64,22 @@ public class EditStockActivity extends AppCompatActivity {
         // Retrieve the stock item ID passed from previous activity
         String itemId = getIntent().getStringExtra("itemId");
 
-        // Update the stock item details in Firebase Database
-        StockItem updatedStockItem = new StockItem(itemId,title, manufacturer,price,quantity, category, "");
-        stockReference.child(itemId).setValue(updatedStockItem);
-
-        Toast.makeText(this, "Stock item updated successfully", Toast.LENGTH_SHORT).show();
+        // Notify observers about the stock item update
+        StockItem updatedStockItem = new StockItem(itemId, title, manufacturer, price, quantity, category, "");
+        onStockItemUpdated(updatedStockItem);
 
         // Finish the activity
         finish();
+    }
+
+    @Override
+    public void onStockItemAdded(StockItem item) {
+
+    }
+
+    @Override
+    public void onStockItemUpdated(StockItem item) {
+        // Handle the event when a stock item is updated
+        // Here you can perform any action needed, such as updating UI or performing additional operations
     }
 }

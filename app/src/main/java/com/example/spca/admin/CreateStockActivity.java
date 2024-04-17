@@ -1,6 +1,6 @@
+// CreateStockActivity.java
 package com.example.spca.admin;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
@@ -17,17 +17,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.spca.R;
-import com.example.spca.StockListActivity;
+import com.example.spca.model.DefaultStockItemFactory;
 import com.example.spca.model.StockItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class CreateStockActivity extends AppCompatActivity {
@@ -37,6 +38,8 @@ public class CreateStockActivity extends AppCompatActivity {
     private Uri imageUri;
     private DatabaseReference stockReference;
     private StorageReference storageReference;
+    private List<StockItemObserver> observers = new ArrayList<>();
+    private StockItemFactory stockItemFactory; // Factory instance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ public class CreateStockActivity extends AppCompatActivity {
         // Initialize Firebase components
         stockReference = FirebaseDatabase.getInstance().getReference("Stock");
         storageReference = FirebaseStorage.getInstance().getReference("Images");
+
+        // Initialize factory instance
+        stockItemFactory = new DefaultStockItemFactory();
 
         // Initialize EditText fields
         titleEditText = findViewById(R.id.titleEditText);
@@ -79,7 +85,7 @@ public class CreateStockActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000 && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
@@ -112,13 +118,16 @@ public class CreateStockActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         String imageUrl = uri.toString();
-                        // Create stock item object
-                        StockItem stockItem = new StockItem(String.valueOf(itemId), title, manufacturer, price,quantity, category, imageUrl);
+                        // Create stock item object using the factory method
+                        StockItem stockItem = stockItemFactory.createStockItem(title, manufacturer, price, quantity, category, imageUrl);
 
                         // Save stock item to Firebase Database
                         stockReference.child(String.valueOf(itemId)).setValue(stockItem);
 
                         Toast.makeText(CreateStockActivity.this, "Stock item added successfully", Toast.LENGTH_SHORT).show();
+
+                        // Notify observers
+                        notifyObservers(stockItem);
 
                         // Clear input fields
                         titleEditText.setText("");
@@ -133,10 +142,16 @@ public class CreateStockActivity extends AppCompatActivity {
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e) {
+            public void onFailure(Exception e) {
                 Toast.makeText(CreateStockActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void notifyObservers(StockItem item) {
+        for (StockItemObserver observer : observers) {
+            observer.onStockItemAdded(item);
+        }
     }
 
     private String getFileExtension(Uri uri) {
@@ -145,8 +160,7 @@ public class CreateStockActivity extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    public void viewStock(View view) {
-        Intent intent = new Intent(this, StockListActivity.class);
-        startActivity(intent);
+    public void registerObserver(StockItemObserver observer) {
+        observers.add(observer);
     }
 }

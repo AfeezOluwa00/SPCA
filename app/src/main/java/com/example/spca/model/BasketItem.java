@@ -7,22 +7,27 @@ public class BasketItem implements Serializable {
     private String title;
     private String manufacturer;
     private String price;
-    private String quantity,  comments;
-
+    private String quantity;
+    private String comments;
     private float ratings;
+
+    // Public no-argument constructor required by Firebase for deserialization
     public BasketItem() {
-        // Default constructor required for Firebase
+        // Default constructor required for Firebase deserialization
     }
 
-    public BasketItem(String stockItemId, String title, String manufacturer, String price, String quantity) {
+    // Constructor with all fields
+    public BasketItem(String stockItemId, String title, String manufacturer, String price, String quantity, String comments, float ratings) {
         this.stockItemId = stockItemId;
         this.title = title;
         this.manufacturer = manufacturer;
         this.price = price;
         this.quantity = quantity;
+        this.comments = comments;
+        this.ratings = ratings;
     }
 
-    // Getters and setters
+    // Getters and setters for all fields
     public String getStockItemId() {
         return stockItemId;
     }
@@ -63,22 +68,63 @@ public class BasketItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public void setTimestamp(long timestamp) {
-    }
-
     public String getComments() {
         return comments;
     }
 
-    public void setComments(String comments){
-}
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
     public float getRatings() {
         return ratings;
     }
 
+    public void setRatings(float ratings) {
+        this.ratings = ratings;
+    }
 
+    // toString(), equals(), and hashCode() methods
+    @Override
+    public String toString() {
+        return "BasketItem{" +
+                "stockItemId='" + stockItemId + '\'' +
+                ", title='" + title + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", price='" + price + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", comments='" + comments + '\'' +
+                ", ratings=" + ratings +
+                '}';
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BasketItem that = (BasketItem) o;
+
+        if (Float.compare(that.ratings, ratings) != 0) return false;
+        if (!stockItemId.equals(that.stockItemId)) return false;
+        if (!title.equals(that.title)) return false;
+        if (!manufacturer.equals(that.manufacturer)) return false;
+        if (!price.equals(that.price)) return false;
+        if (!quantity.equals(that.quantity)) return false;
+        return comments.equals(that.comments);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = stockItemId.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + manufacturer.hashCode();
+        result = 31 * result + price.hashCode();
+        result = 31 * result + quantity.hashCode();
+        result = 31 * result + comments.hashCode();
+        result = 31 * result + (ratings != +0.0f ? Float.floatToIntBits(ratings) : 0);
+        return result;
+    }
 
     public void setRating(float rating) {
     }

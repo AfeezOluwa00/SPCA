@@ -13,18 +13,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.spca.R;
-import com.example.spca.admin.AdminActivity;
-import com.example.spca.admin.CreateStockActivity;
 import com.example.spca.model.StockItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AddToBasketActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AddToBasketActivity extends AppCompatActivity implements BasketSubject {
 
     private StockItem selectedStockItem;
     private EditText editTextQuantity;
     private DatabaseReference basketReference;
+    private List<BasketObserver> observers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,6 @@ public class AddToBasketActivity extends AppCompatActivity {
         // Initialize EditText for quantity input
         editTextQuantity = findViewById(R.id.editTextQuantity);
 
-
         Button addToBasketButton = findViewById(R.id.buttonAddToBasket);
         addToBasketButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +53,6 @@ public class AddToBasketActivity extends AppCompatActivity {
                 addToBasket(v); // Call the addToBasket method when the button is clicked
             }
         });
-
     }
 
     private void displayStockItemDetails() {
@@ -83,6 +83,7 @@ public class AddToBasketActivity extends AppCompatActivity {
                 selectedStockItem.setQuantity(quantityStr); // Set the quantity in the selectedStockItem
                 basketReference.push().setValue(selectedStockItem);
                 Toast.makeText(this, "Item added to basket", Toast.LENGTH_SHORT).show();
+                notifyObservers(selectedStockItem); // Notify observers of the change
                 finish();
             } else {
                 Toast.makeText(this, "Invalid quantity", Toast.LENGTH_SHORT).show();
@@ -92,4 +93,20 @@ public class AddToBasketActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void registerObserver(BasketObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(BasketObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(StockItem item) {
+        for (BasketObserver observer : observers) {
+            observer.onItemAddedToBasket(item);
+        }
+    }
 }
